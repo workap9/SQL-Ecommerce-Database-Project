@@ -1,5 +1,11 @@
 # Ecommerce-Database-Project
 
+WX Online Shopping Platform
+
+Company Description:
+
+WX(fictional) is an online e-commerce platform that operates a chain of hypermarkets (also called supercenters), discount department stores, and grocery stores in the United States. People use WX to order food, consumables, and general merchandise assortments such as groceries, everyday essentials, toys, and electronics.
+
 User Requirements:
 
 The below entities comprise overall user requirements and data needs to be recorded for the same:
