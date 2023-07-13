@@ -25,7 +25,7 @@ User
     Account Type
     
 
-Users have the option to enroll for a  Plus account type to avail benefits on product. Walmart Plus members are entitled to receive discount offers.
+Users have the option to enroll for a  Plus account type to avail benefits on product. WX Plus members are entitled to receive discount offers.
 
 Product
 
@@ -105,11 +105,11 @@ Users can give reviews to none or many sellers.
 
 One order can have one or multiple products at a given time.
 
-Discount is applicable only to Walmart Plus members. A regular member is not eligible to receive discount offers.
+Discount is applicable only to WX Plus members. A regular member is not eligible to receive discount offers.
 
-Users can have 2 account types, Normal or Walmart Plus. Walmart Plus members are entitled to receive discount offers.
+Users can have 2 account types, Normal or WX Plus. WX Plus members are entitled to receive discount offers.
 
-At a given time, only one offer can be availed by one Walmart Plus user. It can be a Regular offer or a Special offer depending on user preference.
+At a given time, only one offer can be availed by one WX Plus user. It can be a Regular offer or a Special offer depending on user preference.
 
 The following steps were implemented
 
