@@ -1,4 +1,4 @@
-# Ecommerce-Database-Project
+# SQL Ecommerce-Database-Project
 
 WX Online Shopping Platform
 
