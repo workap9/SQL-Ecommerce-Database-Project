@@ -1,5 +1,5 @@
 #creating database
-DROP DATABASE WX;
+CREATE DATABASE IF NOT EXISTS WX_db;
 
 #using database WX
 USE WX_db;
@@ -376,13 +376,14 @@ ALTER TABLE product_t rename to product_details_t;
 
 /* DML - Update Records */
 UPDATE user_t
-set AccountType = 'WP'
-where UserID = 3;
+SET AccountType = 'WP'
+WHERE UserID = 3;
 
 COMMIT;
 
 /* DML - Delete Records */
-DELETE FROM user_t where FirstName = 'Jai';
+
+DELETE FROM user_t WHERE FirstName = 'Brear';
 COMMIT;
 
 /* DML - Select Records */
@@ -419,21 +420,24 @@ and OrderDate > '2020-12-31';
 /* Views */
 /* Create view to display user information of users having WX Plus or WP Account Type
 and First name starting with 'A' */
-CREATE OR REPLACE VIEW user_view as
-SELECT user_t.* from user_t
-WHERE UPPER(AccountType) = upper('WP')
-AND UPPER(FirstName) LIKE UPPER('A%');
+CREATE OR REPLACE VIEW user_view AS
+SELECT user_t.* FROM user_t
+WHERE UPPER(AccountType) = UPPER('WP')
+AND UPPER(FirstName) LIKE 'A%';
+
 
 SELECT * FROM user_view;
 
 
 /* Views */
 /* Create view to display product information of products whose price is between 500 and 1000 and whose quantity is more than 1 in order_details table*/
-CREATE OR REPLACE VIEW product_view as
-SELECT prd.* from product_t prd
-join order_details_t ordl
-WHERE prd.price between 500 and 1000
-AND ordl.quantity > 1;
+
+CREATE OR REPLACE VIEW product_view AS
+SELECT prd.* FROM product_t prd
+JOIN order_details_t ordl ON prd.ProductID = ordl.ProductID
+WHERE prd.Price BETWEEN 500 AND 1000
+AND ordl.Quantity > 1;
+
 
 SELECT * FROM product_view;
 
