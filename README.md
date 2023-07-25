@@ -1,10 +1,10 @@
 # SQL Ecommerce-Database-Project
 
-WX Online Shopping Platform
+Walmart Online Shopping Platform Clone
 
 Company Description:
 
-WX(fictional) is an online e-commerce platform that operates a chain of hypermarkets (also called supercenters), discount department stores, and grocery stores in the United States. People use WX to order food, consumables, and general merchandise assortments such as groceries, everyday essentials, toys, and electronics.
+Walmart(fictional) is an online e-commerce platform that operates a chain of hypermarkets (also called supercenters), discount department stores, and grocery stores in the United States. People use Walmart to order food, consumables, and general merchandise assortments such as groceries, everyday essentials, toys, and electronics.
 
 User Requirements:
 
@@ -31,7 +31,7 @@ User
     Account Type
     
 
-Users have the option to enroll for a  Plus account type to avail benefits on product. WX Plus members are entitled to receive discount offers.
+Users have the option to enroll for a  Plus account type to avail benefits on product. Walmart Plus members are entitled to receive discount offers.
 
 Product
 
@@ -59,7 +59,7 @@ Order
 
 Payment
 
-    PaymentID (Unique Identification for every payment made by user)
+    PaymentID (Unique Identification for every payment made by the user)
     
     Payment Date
     
@@ -87,7 +87,7 @@ Discount
     
     Discount Type
 
-There are 2 discount types which are Regular (normal day discount offer) and special discount (seasonal or festive discount offer).
+There are 2 discount types: regular (normal day discount offer) and special (seasonal or festive discount offer).
 
 
 Rules:
@@ -97,13 +97,13 @@ Users can select one or multiple products while shopping. One product can be sel
 Users can place one or multiple orders.
 Assumption: Only one order should lead to one customer at a given time.
 
-Users can make one or multiple payments for an order. However, at a given time only one payment should be done by one user.
+Users can make one or multiple payments for an order. However, at a given time only one payment should be made by one user.
 
 One payment should be associated with only one order.
 
 A Seller can receive none or many orders. At a given time, one order should relate to only one seller.
 
-Multiple products can be sold by one seller. A given product can be sold by multiple sellers at a given time.
+Multiple products can be sold by one seller. A given product can be sold by various sellers at a given time.
 
 Users can give reviews to none or many products.
 
@@ -111,11 +111,11 @@ Users can give reviews to none or many sellers.
 
 One order can have one or multiple products at a given time.
 
-Discount is applicable only to WX Plus members. A regular member is not eligible to receive discount offers.
+Discount is applicable only to Walmart Plus members. A regular member is not eligible to receive discount offers.
 
-Users can have 2 account types, Normal or WX Plus. WX Plus members are entitled to receive discount offers.
+Users can have 2 account types, Normal or Walmart Plus. Walmart Plus members are entitled to receive discount offers.
 
-At a given time, only one offer can be availed by one WX Plus user. It can be a Regular offer or a Special offer depending on user preference.
+At a given time, only one offer can be availed by one Walmart Plus user. It can be a Regular offer or a Special offer depending on user preference.
 
 The following steps were implemented
 
