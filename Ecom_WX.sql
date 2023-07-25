@@ -1,12 +1,13 @@
 #creating database
-CREATE DATABASE IF NOT EXISTS WX_db;
+DROP DATABASE walmart_db;
+CREATE DATABASE walmart_db;
 
-#using database WX
-USE WX_db;
+#using database walmart
+USE walmart_db;
 
 /* DDL- Create Tables */
 CREATE TABLE user_t (
-    UserID INT(10) NOT NULL AUTO_INCREMENT,
+    UserID INT NOT NULL AUTO_INCREMENT,
     Password VARCHAR(30) NOT NULL,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
@@ -14,10 +15,10 @@ CREATE TABLE user_t (
     DOB DATE NOT NULL,
     AccountType VARCHAR(30) NOT NULL,
     CONSTRAINT user_pk PRIMARY KEY (UserID)
-) ENGINE=INNODB;
+) ;
 
 CREATE TABLE seller_t (
-    SellerID INT(10) NOT NULL,
+    SellerID INT NOT NULL,
     SellerName VARCHAR(30) NOT NULL,
     Address VARCHAR(50),
     Reviews VARCHAR(50),
@@ -25,7 +26,7 @@ CREATE TABLE seller_t (
 );
 
 CREATE TABLE user_details_t (
-    UserID INT(10),
+    UserID INT,
     PhoneNumber VARCHAR(15) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     CONSTRAINT user_details_pk PRIMARY KEY (UserID, PhoneNumber, Email),
@@ -35,12 +36,12 @@ CREATE TABLE user_details_t (
 );
 
 CREATE TABLE product_t (
-    ProductID INT(10) NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL AUTO_INCREMENT,
     ProductName VARCHAR(30) NOT NULL,
     Description VARCHAR(50),
-    Price INT(10) NOT NULL,
+    Price INT NOT NULL,
     Category VARCHAR(30),
-    SellerID INT(10),
+    SellerID INT,
     CONSTRAINT product_pk PRIMARY KEY (ProductID),
     CONSTRAINT product_fk FOREIGN KEY (SellerID)
         REFERENCES seller_t (SellerID)
@@ -48,12 +49,12 @@ CREATE TABLE product_t (
 );
 
 CREATE TABLE order_t (
-    OrderID INT(10) NOT NULL AUTO_INCREMENT,
+    OrderID INT NOT NULL AUTO_INCREMENT,
     OrderDate DATE NOT NULL,
     OrderTime VARCHAR(50) NOT NULL,
-    Amount INT(10) NOT NULL,
+    Amount INT NOT NULL,
     OrderStatus VARCHAR(30) NOT NULL,
-    UserID INT(10),
+    UserID INT,
     CONSTRAINT order_pk PRIMARY KEY (OrderID),
     CONSTRAINT order_fk1 FOREIGN KEY (UserID)
         REFERENCES user_t (UserID)
@@ -61,9 +62,9 @@ CREATE TABLE order_t (
 );
 
 CREATE TABLE order_details_t (
-    OrderID INT(10),
-    ProductID INT(10),
-    Quantity INT(10) NOT NULL,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT NOT NULL,
     CONSTRAINT order_details_pk PRIMARY KEY (OrderID, ProductID),
     CONSTRAINT order_details_fk1 FOREIGN KEY (OrderID)
         REFERENCES order_t (OrderID)
@@ -74,13 +75,13 @@ CREATE TABLE order_details_t (
 );
 
 CREATE TABLE payment_t (
-    PaymentID INT(10) NOT NULL AUTO_INCREMENT,
+    PaymentID INT NOT NULL AUTO_INCREMENT,
     PaymentDate DATE NOT NULL,
     PaymentTime VARCHAR(50) NOT NULL,
-    Amount INT(10) NOT NULL,
+    Amount INT NOT NULL,
     ModeOfPayment VARCHAR(30) NOT NULL,
-    UserID INT(10),
-    OrderID INT(10),
+    UserID INT,
+    OrderID INT,
     CONSTRAINT payment_pk PRIMARY KEY (PaymentID),
     CONSTRAINT payment_fk1 FOREIGN KEY (UserID)
         REFERENCES user_t (UserID)
@@ -90,34 +91,34 @@ CREATE TABLE payment_t (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE WX_plus_t (
-    WPID INT(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE walmart_plus_t (
+    WPID INT NOT NULL AUTO_INCREMENT,
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL,
-    Points INT(10) NOT NULL,
-    UserID INT(10),
-    CONSTRAINT WX_plus_pk PRIMARY KEY (WPID),
-    CONSTRAINT WX_plus_fk FOREIGN KEY (UserID)
+    Points INT NOT NULL,
+    UserID INT,
+    CONSTRAINT walmart_plus_pk PRIMARY KEY (WPID),
+    CONSTRAINT walmart_plus_fk FOREIGN KEY (UserID)
         REFERENCES user_t (UserID)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE discount_t (
-    DiscountID INT(10) NOT NULL AUTO_INCREMENT,
+    DiscountID INT NOT NULL AUTO_INCREMENT,
     Validity DATE NOT NULL,
     Type VARCHAR(50) NOT NULL,
-    WPID INT(10),
+    WPID INT,
     CONSTRAINT discount_pk PRIMARY KEY (DiscountID),
     CONSTRAINT discount_fk FOREIGN KEY (WPID)
-        REFERENCES WX_plus_t (WPID)
+        REFERENCES walmart_plus_t (WPID)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE special_discount_t (
-    DiscountID INT(10),
+    DiscountID INT,
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL,
-    Percentage INT(10) NOT NULL,
+    Percentage INT NOT NULL,
     CONSTRAINT special_discount_pk PRIMARY KEY (DiscountID),
     CONSTRAINT special_discount_fk FOREIGN KEY (DiscountID)
         REFERENCES discount_t (DiscountID)
@@ -125,8 +126,8 @@ CREATE TABLE special_discount_t (
 );
 
 CREATE TABLE regular_discount_t (
-    DiscountID INT(10),
-    Percentage INT(10) NOT NULL,
+    DiscountID INT,
+    Percentage INT NOT NULL,
     CONSTRAINT regular_discount_pk PRIMARY KEY (DiscountID),
     CONSTRAINT regular_discount_fk FOREIGN KEY (DiscountID)
         REFERENCES discount_t (DiscountID)
@@ -134,7 +135,7 @@ CREATE TABLE regular_discount_t (
 );
 
 CREATE TABLE normal_account_t (
-    UserID INT(10),
+    UserID INT,
     CONSTRAINT normal_account_pk PRIMARY KEY (UserID),
     CONSTRAINT normal_account_fk FOREIGN KEY (UserID)
         REFERENCES user_t (UserID)
@@ -144,21 +145,21 @@ CREATE TABLE normal_account_t (
 /* DML - Insert Data into tables */
 
 INSERT INTO user_t (UserID, Password, FirstName, LastName, Address, DOB, AccountType) VALUES
-(1, 'abcd1234', 'Howie', 'Stallybrass', 'San Francisco', '1999-10-01', 'WP'),
-(2, 'efgh1234', 'Kayle', 'Ree', 'San Jose', '1997-09-19', 'WP'),
-(3, 'ijkl1234', 'Brear', 'Gaishson', 'Union City', '1993-07-06', 'Normal'),
-(4, 'mnop1234', 'Ajay', 'Gehricke', 'Fremont', '1975-09-06', 'Normal'),
-(5, 'qrst1234', 'Maximilien', 'Povall', 'Fremont', '1985-05-07', 'WP'),
-(6, 'uvwx1234', 'Alric', 'Prosser', 'Hayward', '1981-08-04', 'Normal'),
-(7, 'abcd5678', 'Morry', 'Penman', 'San Francisco', '2001-02-09', 'WP'),
-(8, 'efgh5678', 'Willem', 'Vittet', 'Hayward', '1989-02-08', 'WP'),
-(9, 'ijkl5678', 'Barnebas', 'Eggle', 'Union City', '1976-07-04', 'WP'),
-(10, 'mnop5678', 'Shea', 'Ensley', 'Dublin', '1966-06-06', 'Normal'),
-(11, 'qrst5678', 'Babette', 'Corriea', 'Pleasanton', '1974-10-02', 'WP'),
-(12, 'uvwx1234', 'Linn', 'McGeaney', 'San Francisco', '1968-12-11', 'Normal'),
-(13, 'abcd1357', 'Conan', 'Kelby', 'San Francisco', '1955-12-03', 'WP'),
-(14, 'abcd2468', 'Aurora', 'Skirvane', 'San Francisco', '1972-07-07', 'WP'),
-(15, 'efgh2468', 'Rudiger', 'Lundbech', 'Fremont', '1984-11-02', 'Normal');
+(1, 'abcd1234', 'Y', 'D', 'San Francisco', '1995-06-11', 'WP'),
+(2, 'efgh1234', 'An', 'Pn', 'San Jose', '1997-08-15', 'WP'),
+(3, 'ijkl1234', 'Ji', 'Ba', 'Union City', '1998-09-26', 'Normal'),
+(4, 'mnop1234', 'Ly', 'Ro', 'Fremont', '1995-12-06', 'Normal'),
+(5, 'qrst1234', 'Kan', 'Ma', 'Fremont', '1995-02-07', 'WP'),
+(6, 'uvwx1234', 'Nari', 'R', 'Hayward', '1997-12-04', 'Normal'),
+(7, 'abcd5678', 'Ay', 'Gg', 'San Francisco', '2000-01-01', 'WP'),
+(8, 'efgh5678', 'Ga', 'She', 'Hayward', '1999-04-06', 'WP'),
+(9, 'ijkl5678', 'Aia', 'Ki', 'Union City', '1996-09-03', 'WP'),
+(10, 'mnop5678', 'Ri', 'Par', 'Dublin', '1996-08-08', 'Normal'),
+(11, 'qrst5678', 'Saj', 'War', 'Pleasanton', '1994-10-07', 'WP'),
+(12, 'uvwx1234', 'Chi', 'Dia', 'San Francisco', '1998-02-03', 'Normal'),
+(13, 'abcd1357', 'Ma', 'Da', 'San Francisco', '1995-12-02', 'WP'),
+(14, 'abcd2468', 'Ja', 'Doa', 'San Francisco', '1992-09-09', 'WP'),
+(15, 'efgh2468', 'Mi', 'Ni', 'Fremont', '1994-10-05', 'Normal');
 
 
 INSERT INTO seller_t (SellerID, SellerName, Address, Reviews) VALUES
@@ -175,20 +176,21 @@ INSERT INTO seller_t (SellerID, SellerName, Address, Reviews) VALUES
 
 INSERT INTO user_details_t (UserID, PhoneNumber, Email) VALUES
 (1, '5109948903', 'ya@outlook.com'),
-(2, '5109948924', 'a1@gmail.com'),
-(3, '5109948923', 'j2@yahoo.com'),
-(4, '5109948932', 'l3@icloud.com'),
-(5, '5109948941', 'k4@outlook.com'),
-(6, '5109948951', 'nady5@gmail.com'),
-(7, '5109948961', 'ay2@icloud.com'),
-(8, '5109948971', 'ga3@outlook.com'),
+(2, '5109948924', 'an1@gmail.com'),
+(3, '5109948923', 'ji2@yahoo.com'),
+(4, '5109948932', 'ly3@icloud.com'),
+(5, '5109948941', 'kn4@outlook.com'),
+(6, '5109948951', 'ny5@gmail.com'),
+(7, '5109948961', 'ai12@icloud.com'),
+(8, '5109948971', 'gau@outlook.com'),
 (9, '5109948981', 'ai7@gmail.com'),
-(10,'5109948901', 'ri9@icloud.com'),
-(11, '5109948963', 'sa4@outlook.com'),
-(12, '5109948973', 'ch7@yahoo.com'),
-(13, '5109948928', 'mana@icloud.com'),
-(14, '5109948920', 'jalia@gmail.com'),
-(15, '5109948912', 'mli@outlook.com');
+(10,'5109948901', 'ri89@icloud.com'),
+(11, '5109948963', 'saj4@outlook.com'),
+(12, '5109948973', 'chia7@yahoo.com'),
+(13, '5109948928', 'ma@icloud.com'),
+(14, '5109948920', 'ja@gmail.com'),
+(15, '5109948912', 'mi@outlook.com');
+
 
 
 INSERT INTO product_t (ProductID, ProductName, Description, Price, Category, SellerID) VALUES
@@ -279,7 +281,7 @@ INSERT INTO payment_t (PaymentID, PaymentDate, PaymentTime, Amount, ModeOfPaymen
 (1019, '2021-09-09', '06:43 PM', 1600, 'Credit Card', 3, 119);
 
 
-INSERT INTO WX_plus_t (WPID, StartDate, EndDate, Points, UserID) VALUES
+INSERT INTO walmart_plus_t (WPID, StartDate, EndDate, Points, UserID) VALUES
 (200, '2019-01-24', '2022-01-23', 10000, 1),
 (201, '2019-02-28', '2022-02-27', 1500, 2),
 (202, '2019-03-12', '2022-03-11', 7600, 3),
@@ -294,8 +296,7 @@ INSERT INTO WX_plus_t (WPID, StartDate, EndDate, Points, UserID) VALUES
 (211, '2019-02-07', '2022-02-06', 13000, 12),
 (212, '2019-08-28', '2022-08-27', 1400, 13),
 (213, '2019-10-01', '2022-09-30', 5000, 14),
-(214, '2019-12-02', '2022-12-01', 3600, 15)
-;
+(214, '2019-12-02', '2022-12-01', 3600, 15);
 
 
 INSERT INTO discount_t (DiscountID, Validity, Type, WPID) VALUES
@@ -313,8 +314,7 @@ INSERT INTO discount_t (DiscountID, Validity, Type, WPID) VALUES
 (12, '2025-01-01', 'Special', 211),
 (13, '2024-12-31', 'Regular', 212),
 (14, '2025-01-01', 'Regular', 213),
-(15, '2025-06-15', 'Special', 214)
-;
+(15, '2025-06-15', 'Special', 214);
 
 
 INSERT INTO special_discount_t (DiscountID, StartDate, EndDate, Percentage) VALUES
@@ -327,7 +327,6 @@ INSERT INTO special_discount_t (DiscountID, StartDate, EndDate, Percentage) VALU
 (10, '2019-01-01', '2025-01-01', 35),
 (12, '2019-01-01', '2025-01-01', 60),
 (15, '2019-01-01', '2025-06-15', 40);
-;
 
 
 INSERT INTO regular_discount_t (DiscountID, Percentage) VALUES
@@ -337,7 +336,6 @@ INSERT INTO regular_discount_t (DiscountID, Percentage) VALUES
 (11, 15),
 (13, 15),
 (14, 20);
-;
 
 
 INSERT INTO normal_account_t (UserID) VALUES
@@ -356,9 +354,7 @@ INSERT INTO normal_account_t (UserID) VALUES
 (13),
 (14),
 (15);
-;
 
-COMMIT;
 
 
 /* Alter Table - Rename */
@@ -376,15 +372,13 @@ ALTER TABLE product_t rename to product_details_t;
 
 /* DML - Update Records */
 UPDATE user_t
-SET AccountType = 'WP'
-WHERE UserID = 3;
+set AccountType = 'WP'
+where UserID = 3;
 
-COMMIT;
 
 /* DML - Delete Records */
+DELETE FROM user_t where FirstName = 'Ji';
 
-DELETE FROM user_t WHERE FirstName = 'Brear';
-COMMIT;
 
 /* DML - Select Records */
 SELECT * FROM order_t
@@ -394,19 +388,20 @@ WHERE orderID = 100;
 
 /* Joins - Natural Join */
 /* List unique product name, product price and product price after 10% discount of all products that exist in order_details */
-SELECT DISTINCT prd.productName, prd.Price, .9*prd.Price as "After Discount" FROM product_t prd
+SELECT DISTINCT prd.productName, prd.Price, .9*prd.Price as "After Discount" 
+FROM product_details_t prd
 NATURAL JOIN order_details_t ordl;
 
 /* Joins - Inner Join */
 /* Select User information whose order is delivered successfully */
-select user.* from user_t user
-inner join order_t ord on (user.UserId = ord.Userid)
-where upper(OrderStatus) = upper('Delivered');
+SELECT user.* from user_t user
+INNER JOIN order_t ord on (user.UserId = ord.Userid)
+WHERE upper(OrderStatus) = upper('Delivered');
 
 /* Joins - Left Join */
 /* Display ProductID which is ordered more than once*/
 SELECT ordl.ProductID FROM order_details_t ordl
-LEFT JOIN product_t prd on (prd.productID = ordl.productID)
+LEFT JOIN product_details_t prd on (prd.productID = ordl.productID)
 GROUP BY ordl.productID
 HAVING count(ordl.productID) > 1;
 
@@ -418,35 +413,22 @@ and OrderDate > '2020-12-31';
 
 
 /* Views */
-/* Create view to display user information of users having WX Plus or WP Account Type
+/* Create view to display user information of users having Walmart Plus or WP Account Type
 and First name starting with 'A' */
-CREATE OR REPLACE VIEW user_view AS
-SELECT user_t.* FROM user_t
-WHERE UPPER(AccountType) = UPPER('WP')
-AND UPPER(FirstName) LIKE 'A%';
-
+CREATE OR REPLACE VIEW user_view as
+SELECT user_t.* from user_t
+WHERE UPPER(AccountType) = upper('WP')
+AND UPPER(FirstName) LIKE UPPER('A%');
 
 SELECT * FROM user_view;
 
 
 /* Views */
 /* Create view to display product information of products whose price is between 500 and 1000 and whose quantity is more than 1 in order_details table*/
-
-CREATE OR REPLACE VIEW product_view AS
-SELECT prd.* FROM product_t prd
-JOIN order_details_t ordl ON prd.ProductID = ordl.ProductID
-WHERE prd.Price BETWEEN 500 AND 1000
-AND ordl.Quantity > 1;
-
+CREATE OR REPLACE VIEW product_view as
+SELECT prd.* from product_details_t prd
+join order_details_t ordl
+WHERE prd.price between 500 and 1000
+AND ordl.quantity > 1;
 
 SELECT * FROM product_view;
-
-
-
-
-
-
-
-
-
-
